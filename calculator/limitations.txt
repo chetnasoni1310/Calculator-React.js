@@ -1,0 +1,7 @@
+1.  Abhi evaluateExpression() ke andar jo hum transformation kr rhe hai for 50% like expr
+    We should also handle 
+    .5%  , -40% , 45 % , 34%% and all the other cases too 
+    recommended -->> expr.replace(/(-?(?:\d+\.?\d*|\.\d+))\s*%/g, "($1/100)")
+
+
+2.      
