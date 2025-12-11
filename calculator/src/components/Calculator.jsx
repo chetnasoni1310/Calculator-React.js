@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Calculator.css";
 import Keypad from "./Keypad";
 import Display from "./Display";
@@ -190,7 +190,7 @@ function Calculator() {
       }
 
       // else we will replace last operator with the new one
-      setExpression((prev) => prev.slice(0 - 1) + value);
+      setExpression((prev) => prev.slice(0 , - 1) + value);
       return;
     }
 
@@ -207,6 +207,59 @@ function Calculator() {
     setExpression((prev) => prev + value);
   };
 
+  // ********************************************************************************************
+   useEffect(()=>{
+    const handleKeyPress = (event) => {
+      const key =event.key;
+      
+      // if numbers 0 -9 
+      if(/^[0-9]$/.test(key))
+      {
+        handleButtonClick(key);
+      }
+
+
+      if(isOperator(key))
+      {
+        handleButtonClick(key);
+      }
+
+        // Dot
+    if (key === ".") {
+      handleButtonClick(".");
+    }
+
+    // Enter = "="
+    if (key === "Enter") {
+      handleButtonClick("=");
+    }
+
+    // Backspace
+    if (key === "Backspace") {
+      handleButtonClick("BACKSPACE");
+    }
+
+    // Escape for AC
+    if (key === "Escape") {
+      handleButtonClick("C");
+    }
+
+    // Parentheses
+    if (key === "(" || key === ")") {
+      handleButtonClick(key);
+    }
+
+    // Percentage
+    if (key === "%") {
+      handleButtonClick("%");
+    }
+  };
+
+  window.addEventListener("keydown" , handleKeyPress);
+  return () => window.removeEventListener("keydown",handleKeyPress);
+      } ,[expression , result])
+
+    
   return (
     <div className="flex justify-center items-center pt-10 mx-auto bg-[#FAFAE8] h-screen">
       <div className="calculator bg-white">
